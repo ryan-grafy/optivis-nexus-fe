@@ -1,12 +1,6 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  // 정적 사이트 생성 (선택사항)
-  // output: 'export',
-
-  // 독립 실행형 배포 최적화
-  output: "standalone",
-
   // 개발 환경에서 Cross origin 요청 허용
   allowedDevOrigins: ["192.168.0.61"],
 
