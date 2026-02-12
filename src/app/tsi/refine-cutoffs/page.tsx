@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { AppLayout } from "@/components/layout/AppLayout";
 import Select from "@/components/ui/select";
-import ReactECharts from "echarts-for-react";
+import ReactECharts from "@/components/charts/DynamicECharts";
 
 /**
  * TSI: Refine Cutoffs

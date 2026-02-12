@@ -4,9 +4,8 @@ import { useEffect, useRef, useState } from "react";
 import * as Dialog from "@radix-ui/react-dialog";
 import * as VisuallyHidden from "@radix-ui/react-visually-hidden";
 import Image from "next/image";
-import ReactECharts from "echarts-for-react";
+import ReactECharts from "@/components/charts/DynamicECharts";
 import ArrowIcon from "@/components/ui/arrow-icon";
-import * as echarts from "echarts";
 interface FullscreenBarChartModalProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
@@ -31,7 +30,7 @@ export default function FullscreenBarChartModal({
   formatter,
 }: FullscreenBarChartModalProps) {
   const [showReduction, setShowReduction] = useState(false);
-  const chartRef = useRef<ReactECharts>(null);
+  const chartRef = useRef<any>(null);
 
   const reduction = traditionalValue - optivisValue;
 

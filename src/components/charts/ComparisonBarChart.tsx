@@ -1,6 +1,6 @@
 "use client";
 
-import ReactECharts from "echarts-for-react";
+import ReactECharts from "@/components/charts/DynamicECharts";
 
 interface ComparisonBarChartProps {
   optivisValue: number;
