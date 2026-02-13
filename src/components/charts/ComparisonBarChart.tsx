@@ -75,6 +75,8 @@ export function ComparisonBarChart({
           },
         ],
       }}
+      notMerge={true}
+      lazyUpdate={true}
       style={{ height, width: '100%' }}
     />
   );

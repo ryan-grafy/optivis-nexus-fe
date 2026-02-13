@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useMemo } from "react";
 import ReactECharts from "@/components/charts/DynamicECharts";
 
 interface LineChartWithHighlightProps {
@@ -127,212 +127,274 @@ export const LineChartWithHighlight: React.FC<LineChartWithHighlightProps> = ({
   const [tooltipVisible, setTooltipVisible] = useState(false);
   const [tooltipPosition, setTooltipPosition] = useState({ x: 0, y: 0 });
 
-  // highlightXValue가 있으면 x축 값 기준, 없으면 인덱스 기준
-  let optivisHighlightIndex: number;
-  if (highlightXValue !== undefined) {
-    // x축 값 기준으로 가장 가까운 OPTIVIS 포인트 찾기
-    optivisHighlightIndex = findClosestIndexByX(optivisData, highlightXValue);
-  } else if (highlightIndex !== undefined) {
-    // 인덱스 기준 (기존 방식)
-    optivisHighlightIndex = Math.min(
-      Math.max(0, highlightIndex),
-      optivisData.length - 1,
-    );
-  } else {
-    optivisHighlightIndex = -1;
-  }
+  // 하이라이트 포인트 계산 메모이제이션
+  const { optivisPoint, traditionalPoint } = useMemo(() => {
+    let optivisHighlightIndex: number;
+    if (highlightXValue !== undefined) {
+      optivisHighlightIndex = findClosestIndexByX(optivisData, highlightXValue);
+    } else if (highlightIndex !== undefined) {
+      optivisHighlightIndex = Math.min(
+        Math.max(0, highlightIndex),
+        optivisData.length - 1,
+      );
+    } else {
+      optivisHighlightIndex = -1;
+    }
 
-  // OPTIVIS의 y축 값에 가장 가까운 Traditional 포인트 찾기
-  const optivisY =
-    optivisHighlightIndex >= 0 && optivisHighlightIndex < optivisData.length
-      ? optivisData[optivisHighlightIndex][1]
-      : null;
+    const optivisY =
+      optivisHighlightIndex >= 0 && optivisHighlightIndex < optivisData.length
+        ? optivisData[optivisHighlightIndex][1]
+        : null;
 
-  const traditionalHighlightIndex =
-    optivisY !== null ? findClosestIndexByY(traditionalData, optivisY) : -1;
+    const traditionalHighlightIndex =
+      optivisY !== null ? findClosestIndexByY(traditionalData, optivisY) : -1;
 
-  const optivisPoint =
-    optivisHighlightIndex >= 0 && optivisHighlightIndex < optivisData.length
-      ? optivisData[optivisHighlightIndex]
-      : null;
-  const traditionalPoint =
-    traditionalHighlightIndex >= 0 &&
-    traditionalHighlightIndex < traditionalData.length
-      ? traditionalData[traditionalHighlightIndex]
-      : null;
+    const oPoint =
+      optivisHighlightIndex >= 0 && optivisHighlightIndex < optivisData.length
+        ? optivisData[optivisHighlightIndex]
+        : null;
+    const tPoint =
+      traditionalHighlightIndex >= 0 &&
+      traditionalHighlightIndex < traditionalData.length
+        ? traditionalData[traditionalHighlightIndex]
+        : null;
 
-  const series: any[] = [
-    {
-      name: "OPTIVIS",
-      type: "line",
-      data: optivisData,
-      lineStyle: { color: optivisColor, width: optivisLineWidth },
-      symbol: "circle",
-      symbolSize: optivisSymbolSize,
-      itemStyle: { color: optivisColor },
-      smooth: true,
-      z: 3,
-      markPoint: optivisPoint
-        ? {
-            data: [
-              //   {
-              //     coord: optivisPoint,
-              //     symbol: "circle",
-              //     symbolSize: 28,
-              //     itemStyle: { color: optivisColor, opacity: 0.3 },
-              //   },
-              {
-                coord: optivisPoint,
-                symbol: "circle",
-                symbolSize: 19,
-                itemStyle: { color: optivisColor, opacity: 0.5 },
+    return { optivisPoint: oPoint, traditionalPoint: tPoint };
+  }, [optivisData, traditionalData, highlightIndex, highlightXValue]);
+
+  // ECharts option 객체 메모이제이션
+  const chartOption = useMemo(() => {
+    const series: any[] = [
+      {
+        name: "OPTIVIS",
+        type: "line",
+        data: optivisData,
+        lineStyle: { color: optivisColor, width: optivisLineWidth },
+        symbol: "circle",
+        symbolSize: optivisSymbolSize,
+        itemStyle: { color: optivisColor },
+        smooth: true,
+        z: 3,
+        markPoint: optivisPoint
+          ? {
+              data: [
+                {
+                  coord: optivisPoint,
+                  symbol: "circle",
+                  symbolSize: 19,
+                  itemStyle: { color: optivisColor, opacity: 0.5 },
+                },
+                {
+                  coord: optivisPoint,
+                  symbol: "circle",
+                  symbolSize: 9,
+                  itemStyle: { color: optivisColor, opacity: 0.8 },
+                },
+              ],
+              label: { show: false },
+              z: 10,
+            }
+          : undefined,
+        markLine: optivisPoint
+          ? {
+              symbol: "none",
+              lineStyle: {
+                type: "dashed",
+                width: 1,
+                opacity: 1,
               },
-              {
-                coord: optivisPoint,
-                symbol: "circle",
-                symbolSize: 9,
-                itemStyle: { color: optivisColor, opacity: 0.8 },
-              },
-            ],
-            label: { show: false },
-            z: 10,
-          }
-        : undefined,
-      markLine: optivisPoint
-        ? {
-            symbol: "none",
-            lineStyle: {
-              type: "dashed",
-              width: 1,
-              opacity: 1,
+              data: [
+                {
+                  xAxis: optivisPoint[0],
+                  label: { show: false },
+                  lineStyle: {
+                    color: optivisColor,
+                    type: "solid",
+                    width: 2,
+                    opacity: 1,
+                  },
+                },
+                {
+                  yAxis: optivisPoint[1],
+                  label: { show: false },
+                  lineStyle: {
+                    color: "#7654F0",
+                    type: [4, 3] as any,
+                    width: 1.5,
+                    opacity: 0.8,
+                  },
+                },
+              ],
+              z: 5,
+            }
+          : undefined,
+        ...(showAreaStyle && {
+          areaStyle: {
+            color: {
+              type: "linear",
+              x: 0,
+              y: 0,
+              x2: 0,
+              y2: 1,
+              colorStops: [
+                { offset: 0, color: optivisAreaColor },
+                { offset: 0.5, color: optivisAreaColor.replace("0.25", "0.12") },
+                { offset: 1, color: optivisAreaColor.replace("0.25", "0.03") },
+              ],
             },
-            data: [
-              {
-                xAxis: optivisPoint[0],
-                label: { show: false },
-                lineStyle: {
-                  color: optivisColor,
-                  type: "solid",
-                  width: 2,
-                  opacity: 1,
-                },
-              },
-              {
-                yAxis: optivisPoint[1],
-                label: { show: false },
-                lineStyle: {
-                  color: "#7654F0",
-                  type: [4, 3] as any,
-                  width: 1.5,
-                  opacity: 0.8,
-                },
-              },
-            ],
-            z: 5,
-          }
-        : undefined,
-      ...(showAreaStyle && {
-        areaStyle: {
-          color: {
-            type: "linear",
-            x: 0,
-            y: 0,
-            x2: 0,
-            y2: 1,
-            colorStops: [
-              { offset: 0, color: optivisAreaColor },
-              { offset: 0.5, color: optivisAreaColor.replace("0.25", "0.12") },
-              { offset: 1, color: optivisAreaColor.replace("0.25", "0.03") },
-            ],
+            origin: "start",
           },
-          origin: "start",
-        },
-      }),
-    },
-    {
-      name: "Traditional",
-      type: "line",
-      data: traditionalData,
-      lineStyle: { color: traditionalColor, width: traditionalLineWidth },
-      symbol: "circle",
-      symbolSize: traditionalSymbolSize,
-      itemStyle: { color: traditionalColor },
-      smooth: true,
-      z: 2,
-      markPoint: traditionalPoint
-        ? {
-            data: [
-              //   {
-              //     coord: traditionalPoint,
-              //     symbol: "circle",
-              //     symbolSize: 28,
-              //     itemStyle: { color: traditionalColor, opacity: 0.3 },
-              //   },
-              {
-                coord: traditionalPoint,
-                symbol: "circle",
-                symbolSize: 19,
-                itemStyle: { color: traditionalColor, opacity: 0.5 },
+        }),
+      },
+      {
+        name: "Traditional",
+        type: "line",
+        data: traditionalData,
+        lineStyle: { color: traditionalColor, width: traditionalLineWidth },
+        symbol: "circle",
+        symbolSize: traditionalSymbolSize,
+        itemStyle: { color: traditionalColor },
+        smooth: true,
+        z: 2,
+        markPoint: traditionalPoint
+          ? {
+              data: [
+                {
+                  coord: traditionalPoint,
+                  symbol: "circle",
+                  symbolSize: 19,
+                  itemStyle: { color: traditionalColor, opacity: 0.5 },
+                },
+                {
+                  coord: traditionalPoint,
+                  symbol: "circle",
+                  symbolSize: 9,
+                  itemStyle: { color: traditionalColor, opacity: 0.8 },
+                },
+              ],
+              label: { show: false },
+              z: 10,
+            }
+          : undefined,
+        markLine: traditionalPoint
+          ? {
+              symbol: "none",
+              lineStyle: {
+                type: "dashed",
+                width: 1,
+                opacity: 1,
               },
-              {
-                coord: traditionalPoint,
-                symbol: "circle",
-                symbolSize: 9,
-                itemStyle: { color: traditionalColor, opacity: 0.8 },
-              },
-            ],
-            label: { show: false },
-            z: 10,
-          }
-        : undefined,
-      markLine: traditionalPoint
-        ? {
-            symbol: "none",
-            lineStyle: {
-              type: "dashed",
-              width: 1,
-              opacity: 1,
+              data: [
+                {
+                  xAxis: traditionalPoint[0],
+                  label: { show: false },
+                  lineStyle: {
+                    color: traditionalColor,
+                    type: "solid",
+                    width: 2,
+                    opacity: 1,
+                  },
+                },
+              ],
+              z: 5,
+            }
+          : undefined,
+        ...(showAreaStyle && {
+          areaStyle: {
+            color: {
+              type: "linear",
+              x: 0,
+              y: 0,
+              x2: 0,
+              y2: 1,
+              colorStops: [
+                { offset: 0, color: traditionalAreaColor },
+                {
+                  offset: 0.5,
+                  color: traditionalAreaColor.replace("0.25", "0.12"),
+                },
+                {
+                  offset: 1,
+                  color: traditionalAreaColor.replace("0.25", "0.03"),
+                },
+              ],
             },
-            data: [
-              {
-                xAxis: traditionalPoint[0],
-                label: { show: false },
-                lineStyle: {
-                  color: traditionalColor,
-                  type: "solid",
-                  width: 2,
-                  opacity: 1,
-                },
-              },
-            ],
-            z: 5,
-          }
-        : undefined,
-      ...(showAreaStyle && {
-        areaStyle: {
-          color: {
-            type: "linear",
-            x: 0,
-            y: 0,
-            x2: 0,
-            y2: 1,
-            colorStops: [
-              { offset: 0, color: traditionalAreaColor },
-              {
-                offset: 0.5,
-                color: traditionalAreaColor.replace("0.25", "0.12"),
-              },
-              {
-                offset: 1,
-                color: traditionalAreaColor.replace("0.25", "0.03"),
-              },
-            ],
+            origin: "start",
           },
-          origin: "start",
+        }),
+      },
+    ];
+
+    return {
+      grid,
+      xAxis: {
+        type: "value",
+        name: xAxisName,
+        nameLocation: "middle",
+        nameGap: xAxisConfig.nameGap ?? 30,
+        nameTextStyle: xAxisConfig.nameTextStyle ?? {
+          fontSize: 12,
+          color: "#666",
         },
-      }),
-    },
-  ];
+        axisLine: {
+          show: showAxes,
+          ...(showAxes && { lineStyle: { color: "#999" } }),
+        },
+        axisTick: { show: showTicks },
+        axisLabel: {
+          show: showTicks,
+          ...(xAxisConfig.axisLabel && {
+            fontSize: xAxisConfig.axisLabel.fontSize,
+            fontWeight: xAxisConfig.axisLabel.fontWeight,
+            color: xAxisConfig.axisLabel.color,
+          }),
+        },
+        splitLine: {
+          show: showGrid,
+          lineStyle: { color: "#e0e0e0", type: "dashed" },
+        },
+        scale: xAxisConfig.scale ?? false,
+      },
+      yAxis: {
+        type: "value",
+        name: yAxisName,
+        nameLocation: "middle",
+        nameGap: yAxisConfig.nameGap ?? 40,
+        nameTextStyle: yAxisConfig.nameTextStyle ?? {
+          fontSize: 12,
+          color: "#666",
+        },
+        axisLine: {
+          show: showAxes,
+          ...(showAxes && { lineStyle: { color: "#999" } }),
+        },
+        axisTick: { show: showTicks },
+        axisLabel: {
+          show: showTicks,
+          ...(yAxisConfig.axisLabel && {
+            fontSize: yAxisConfig.axisLabel.fontSize,
+            fontWeight: yAxisConfig.axisLabel.fontWeight,
+            color: yAxisConfig.axisLabel.color,
+          }),
+        },
+        splitLine: {
+          show: showGrid,
+          lineStyle: { color: "#e0e0e0", type: "dashed" },
+        },
+        scale: yAxisConfig.scale ?? false,
+      },
+      series,
+      tooltip: { show: false },
+    };
+  }, [
+    optivisData, traditionalData, optivisPoint, traditionalPoint,
+    grid, xAxisName, yAxisName, xAxisConfig, yAxisConfig,
+    showGrid, showAxes, showTicks, showAreaStyle,
+    optivisColor, traditionalColor,
+    optivisSymbolSize, traditionalSymbolSize,
+    optivisLineWidth, traditionalLineWidth,
+    optivisAreaColor, traditionalAreaColor,
+  ]);
 
   const handleChartClick = (e: React.MouseEvent<HTMLDivElement>) => {
     if (!showTooltip || (!optivisPoint && !traditionalPoint)) return;
@@ -357,67 +419,9 @@ export const LineChartWithHighlight: React.FC<LineChartWithHighlightProps> = ({
       onClick={handleChartClick}
     >
       <ReactECharts
-        option={{
-          grid,
-          xAxis: {
-            type: "value",
-            name: xAxisName,
-            nameLocation: "middle",
-            nameGap: xAxisConfig.nameGap ?? 30,
-            nameTextStyle: xAxisConfig.nameTextStyle ?? {
-              fontSize: 12,
-              color: "#666",
-            },
-            axisLine: {
-              show: showAxes,
-              ...(showAxes && { lineStyle: { color: "#999" } }),
-            },
-            axisTick: { show: showTicks },
-            axisLabel: {
-              show: showTicks,
-              ...(xAxisConfig.axisLabel && {
-                fontSize: xAxisConfig.axisLabel.fontSize,
-                fontWeight: xAxisConfig.axisLabel.fontWeight,
-                color: xAxisConfig.axisLabel.color,
-              }),
-            },
-            splitLine: {
-              show: showGrid,
-              lineStyle: { color: "#e0e0e0", type: "dashed" },
-            },
-            scale: xAxisConfig.scale ?? false,
-          },
-          yAxis: {
-            type: "value",
-            name: yAxisName,
-            nameLocation: "middle",
-            nameGap: yAxisConfig.nameGap ?? 40,
-            nameTextStyle: yAxisConfig.nameTextStyle ?? {
-              fontSize: 12,
-              color: "#666",
-            },
-            axisLine: {
-              show: showAxes,
-              ...(showAxes && { lineStyle: { color: "#999" } }),
-            },
-            axisTick: { show: showTicks },
-            axisLabel: {
-              show: showTicks,
-              ...(yAxisConfig.axisLabel && {
-                fontSize: yAxisConfig.axisLabel.fontSize,
-                fontWeight: yAxisConfig.axisLabel.fontWeight,
-                color: yAxisConfig.axisLabel.color,
-              }),
-            },
-            splitLine: {
-              show: showGrid,
-              lineStyle: { color: "#e0e0e0", type: "dashed" },
-            },
-            scale: yAxisConfig.scale ?? false,
-          },
-          series,
-          tooltip: { show: false }, // ECharts 기본 툴팁 비활성화
-        }}
+        option={chartOption}
+        notMerge={true}
+        lazyUpdate={true}
         style={{ height: "100%", width: "100%" }}
         onEvents={
           onChartClick

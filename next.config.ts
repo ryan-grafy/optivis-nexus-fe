@@ -9,7 +9,7 @@ const nextConfig: NextConfig = {
     unoptimized: true, // 정적 export 시 필요
   },
 
-  // SVGR 설정 - SVG를 React 컴포넌트로 import 가능
+  // SVGR 설정 - SVG를 React 컴포넌트로 import 가능 (webpack용 - 빌드 시 사용)
   webpack(config) {
     config.module.rules.push({
       test: /\.svg$/i,
@@ -18,6 +18,19 @@ const nextConfig: NextConfig = {
     });
     return config;
   },
+
+  // Turbopack용 SVGR 설정 (개발 서버에서 사용)
+  turbopack: {
+    rules: {
+      "*.svg": {
+        loaders: ["@svgr/webpack"],
+        as: "*.js",
+      },
+    },
+  },
+
+  // 개발 인디케이터 비활성화
+  devIndicators: false,
 
   // 빌드 시 ESLint 건너뛰기 (빠른 배포용)
   eslint: {

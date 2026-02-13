@@ -485,13 +485,14 @@ export default function SimulationPage() {
   const simulationData =
     apiData && dynamicSimulationData ? dynamicSimulationData : null;
 
-  // API 데이터를 차트 형식으로 변환 (Traditional 데이터가 없어도 OPTIVIS만으로 그래프 그리기)
+  // API 데이터를 차트 형식으로 변환 - 활성 탭의 데이터만 계산 (lazy)
   const apiChartData = useMemo(() => {
     if (!apiData || optivisData.length === 0) {
       return null;
     }
 
-    // 필터링된 데이터가 비어있으면 원본 데이터 사용
+    // Compare View에서 사용하는 라인 차트 데이터 (compare 탭일 때만 계산)
+    // Reduction View에서도 우측 Compare View 카드에서 사용하므로 항상 계산
     const chart1Optivis =
       chartData.chart1Data.optivis.length > 0
         ? chartData.chart1Data.optivis
