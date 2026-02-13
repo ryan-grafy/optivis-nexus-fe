@@ -151,7 +151,7 @@ export default function HeroPanel({
           flex: "1 1 400px",
           maxWidth: "675px",
           aspectRatio: "675 / 400",
-          borderRadius: "24px",
+          borderRadius: "32px",
         }}
       >
         {videoUrl ? (

@@ -9,7 +9,7 @@ export interface HomeState {
 }
 
 const initialState = {
-  selectedPackageId: null,
+  selectedPackageId: "1",
   selectedServiceId: null,
 };
 

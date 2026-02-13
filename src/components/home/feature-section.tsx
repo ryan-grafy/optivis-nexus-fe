@@ -55,7 +55,7 @@ export default function FeatureSection({
         minHeight: 0,
         padding: "28px",
         gap: "16px",
-        borderRadius: "36px",
+        borderRadius: "44px",
         overflow: "hidden",
       }}
     >

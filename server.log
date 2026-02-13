@@ -1,0 +1,12 @@
+
+> nexus-fe@0.1.0 dev
+> next dev
+
+ ⚠ Port 3000 is in use by an unknown process, using available port 3003 instead.
+   ▲ Next.js 15.5.7
+   - Local:        http://localhost:3003
+   - Network:      http://10.255.255.254:3003
+
+ ✓ Starting...
+ ✓ Ready in 1410ms
+[?25h

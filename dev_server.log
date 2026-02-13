@@ -1,0 +1,141 @@
+   ▲ Next.js 15.5.7
+   - Local:        http://localhost:3000
+   - Network:      http://10.255.255.254:3000
+
+ ✓ Starting...
+ ✓ Ready in 1379ms
+ ○ Compiling / ...
+ ✓ Compiled / in 988ms (674 modules)
+ HEAD / 200 in 1424ms
+ GET / 200 in 67ms
+ ○ Compiling /ats/simulation ...
+ ✓ Compiled /ats/simulation in 5.5s (2079 modules)
+ GET /ats/simulation 200 in 5654ms
+ ✓ Compiled /api/proxy/study-play in 468ms (2099 modules)
+ POST /api/proxy/study-play 200 in 20605ms
+ ✓ Compiled in 1155ms (2144 modules)
+ GET /ats/simulation 200 in 148ms
+ ✓ Compiled in 389ms (2144 modules)
+ GET /ats/simulation 200 in 83ms
+ ✓ Compiled in 450ms (2144 modules)
+ GET /ats/simulation 200 in 59ms
+ GET /ats/simulation 200 in 254ms
+ ✓ Compiled /api/proxy/study-play in 166ms (1115 modules)
+ POST /api/proxy/study-play 200 in 20531ms
+ ✓ Compiled in 546ms (2144 modules)
+ GET /ats/simulation 200 in 134ms
+ ✓ Compiled in 2s (2144 modules)
+ GET /ats/simulation 200 in 96ms
+ ✓ Compiled in 795ms (2144 modules)
+ GET /ats/simulation 200 in 68ms
+ ✓ Compiled in 2.6s (2144 modules)
+ GET /ats/simulation 200 in 117ms
+ ✓ Compiled in 669ms (2144 modules)
+ GET /ats/simulation 200 in 108ms
+ ✓ Compiled in 329ms (2144 modules)
+ GET /ats/simulation 200 in 84ms
+ ✓ Compiled in 308ms (2144 modules)
+ GET /ats/simulation 200 in 72ms
+ ✓ Compiled in 419ms (2144 modules)
+ GET /ats/simulation 200 in 75ms
+ ✓ Compiled in 433ms (2144 modules)
+ GET /ats/simulation 200 in 87ms
+ ✓ Compiled in 477ms (2144 modules)
+ GET /ats/simulation 200 in 123ms
+ GET /ats/simulation 200 in 308ms
+ ✓ Compiled /api/proxy/study-play in 327ms (1115 modules)
+ POST /api/proxy/study-play 200 in 22530ms
+ ✓ Compiled in 1173ms (2144 modules)
+ GET /ats/simulation 200 in 181ms
+ ✓ Compiled in 615ms (2144 modules)
+ GET /ats/simulation 200 in 101ms
+ ✓ Compiled in 355ms (2144 modules)
+ GET /ats/simulation 200 in 100ms
+ ✓ Compiled in 575ms (2144 modules)
+ GET /ats/simulation 200 in 102ms
+ ✓ Compiled in 361ms (2144 modules)
+ GET /ats/simulation 200 in 96ms
+ ✓ Compiled in 359ms (2144 modules)
+ GET /ats/simulation 200 in 71ms
+ ✓ Compiled in 378ms (2144 modules)
+ GET /ats/simulation 200 in 71ms
+ ✓ Compiled in 343ms (2144 modules)
+ GET /ats/simulation 200 in 68ms
+ ✓ Compiled in 383ms (2144 modules)
+ GET /ats/simulation 200 in 72ms
+ ✓ Compiled in 931ms (2144 modules)
+ GET /ats/simulation 200 in 81ms
+ ✓ Compiled in 283ms (2144 modules)
+ GET /ats/simulation 200 in 80ms
+ GET /ats/simulation 200 in 292ms
+ ✓ Compiled in 2.2s (2144 modules)
+ GET /ats/simulation 200 in 122ms
+ ✓ Compiled in 707ms (2144 modules)
+ GET /ats/simulation 200 in 107ms
+ ✓ Compiled in 1234ms (2144 modules)
+ GET /ats/simulation 200 in 254ms
+ ✓ Compiled in 485ms (2144 modules)
+ GET /ats/simulation 200 in 100ms
+ ✓ Compiled in 2.3s (2144 modules)
+ GET /ats/simulation 200 in 85ms
+ ✓ Compiled in 409ms (2144 modules)
+ GET /ats/simulation 200 in 71ms
+ ✓ Compiled in 281ms (2144 modules)
+ GET /ats/simulation 200 in 62ms
+ ✓ Compiled / in 158ms (1107 modules)
+ GET / 200 in 243ms
+ GET /ats/simulation 200 in 32ms
+ ✓ Compiled in 3.1s (2155 modules)
+ GET /ats/simulation 200 in 141ms
+ ✓ Compiled in 994ms (2155 modules)
+ GET /ats/simulation 200 in 195ms
+ ✓ Compiled in 691ms (2155 modules)
+ GET /ats/simulation 200 in 115ms
+ ⨯ Error: Could not find the module "/home/grafy/projects/nexus-fe-grafy/node_modules/next/dist/next-devtools/userspace/app/segment-explorer-node.js#SegmentViewNode" in the React Client Manifest. This is probably a bug in the React Server Components bundler.
+    at stringify (<anonymous>) {
+  digest: '3413086014'
+}
+ ⨯ Error: Could not find the module "/home/grafy/projects/nexus-fe-grafy/node_modules/next/dist/next-devtools/userspace/app/segment-explorer-node.js#SegmentViewNode" in the React Client Manifest. This is probably a bug in the React Server Components bundler.
+    at stringify (<anonymous>)
+    at stringify (<anonymous>) {
+  digest: '1955825182'
+}
+ ⨯ Error: Could not find the module "/home/grafy/projects/nexus-fe-grafy/node_modules/next/dist/next-devtools/userspace/app/segment-explorer-node.js#SegmentViewNode" in the React Client Manifest. This is probably a bug in the React Server Components bundler.
+    at stringify (<anonymous>)
+    at stringify (<anonymous>) {
+  digest: '1955825182'
+}
+ ⨯ Error: Could not find the module "/home/grafy/projects/nexus-fe-grafy/node_modules/next/dist/next-devtools/userspace/app/segment-explorer-node.js#SegmentViewNode" in the React Client Manifest. This is probably a bug in the React Server Components bundler.
+    at stringify (<anonymous>)
+    at stringify (<anonymous>) {
+  digest: '1955825182'
+}
+ ⨯ Error: Could not find the module "/home/grafy/projects/nexus-fe-grafy/node_modules/next/dist/next-devtools/userspace/app/segment-explorer-node.js#SegmentViewNode" in the React Client Manifest. This is probably a bug in the React Server Components bundler.
+    at stringify (<anonymous>) {
+  digest: '3413086014'
+}
+ ⨯ Error: Could not find the module "/home/grafy/projects/nexus-fe-grafy/node_modules/next/dist/next-devtools/userspace/app/segment-explorer-node.js#SegmentViewNode" in the React Client Manifest. This is probably a bug in the React Server Components bundler.
+    at stringify (<anonymous>) {
+  digest: '3413086014'
+}
+ ⨯ [TypeError: Cannot read properties of undefined (reading 'call')] {
+  digest: '3308724024'
+}
+ ⨯ Error: Could not find the module "/home/grafy/projects/nexus-fe-grafy/node_modules/next/dist/next-devtools/userspace/app/segment-explorer-node.js#SegmentViewNode" in the React Client Manifest. This is probably a bug in the React Server Components bundler.
+    at stringify (<anonymous>) {
+  digest: '3413086014'
+}
+[TypeError: Cannot read properties of undefined (reading 'call')]
+ ⨯ [TypeError: Cannot read properties of undefined (reading 'call')]
+ ⨯ [TypeError: Cannot read properties of undefined (reading 'call')] {
+  page: '/ats/simulation'
+}
+ GET /ats/simulation 500 in 3959ms
+ ○ Compiling /_error ...
+ ✓ Compiled /_error in 885ms (2420 modules)
+ GET /ats/simulation 200 in 830ms
+ GET /ats/simulation 200 in 21ms
+ GET /ats/simulation 200 in 324ms
+ ✓ Compiled in 562ms (2402 modules)
+ GET /ats/simulation 200 in 428ms
+[?25h

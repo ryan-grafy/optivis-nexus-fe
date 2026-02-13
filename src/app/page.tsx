@@ -3,6 +3,7 @@
 import { AppLayout } from "@/components/layout/AppLayout";
 import FeatureSection from "@/components/home/feature-section";
 import HeroPanel from "@/components/home/hero-panel";
+import PackageVideoPanel from "@/components/home/package-video-panel";
 import SimulationSearch from "@/components/home/simulation-search";
 import SimulationTable from "@/components/home/simulation-table";
 import { useHomeStore } from "@/store/homeStore";
@@ -40,7 +41,17 @@ const packages: Package[] = [
       "Simulates individual patient outcomes under various treatment conditions. Offers tailored response probabilities and treatment recommendations for clinical decision-making.",
     icon: "/assets/icons/twin-predict.svg",
     selectedIcon: "/assets/icons/twin-predict-selected.svg",
-    services: [],
+    services: [
+      {
+        id: "7",
+        title: "Patient Outcome Prediction",
+        description:
+          "Simulates individual patient outcomes under various treatment conditions. Offers tailored response probabilities and treatment recommendations for clinical decision-making.",
+        icon: "/assets/icons/twin-predict.svg", // Reusing parent icon temporarily
+        variant: "glass" as const,
+        selectedIcon: "/assets/icons/twin-predict-selected.svg",
+      },
+    ],
   },
   {
     id: "2",
@@ -85,7 +96,26 @@ const packages: Package[] = [
       "Supports early trial design by identifying target subgroups and simulating different scenarios. Helps sponsors reduce sample size, optimize power, and refine study strategies.",
     icon: "/assets/icons/virtual-control.svg",
     selectedIcon: "/assets/icons/virtual-control-selected.svg",
-    services: [],
+    services: [
+      {
+        id: "8",
+        title: "Synthetic Control Arm",
+        description:
+          "Generates a synthetic control group based on historical data to compare with the experimental arm, reducing the need for placebo patients.",
+        icon: "/assets/icons/virtual-control.svg", // Reusing parent icon temporarily
+        variant: "glass" as const,
+        selectedIcon: "/assets/icons/virtual-control-selected.svg",
+      },
+      {
+        id: "9",
+        title: "Historical Data Analysis",
+        description:
+          "Analyzes historical clinical trial data to inform current study design and predict potential outcomes.",
+        icon: "/assets/icons/virtual-control.svg", // Reusing parent icon temporarily
+        variant: "glass" as const,
+        selectedIcon: "/assets/icons/virtual-control-selected.svg",
+      },
+    ],
   },
 ];
 
@@ -108,6 +138,49 @@ const serviceContentMap: Record<string, RightPanelContent> = {
     description:
       "Drug level simulation based on patient baseline information and Simulation Settings, with support for multiple conditions per scenario",
     imageUrl: "/assets/main/conditional-drug.png",
+  },
+  "7": {
+    title: "Patient Outcome\nPrediction",
+    description:
+      "Simulates individual patient outcomes under various treatment conditions. Offers tailored response probabilities and treatment recommendations for clinical decision-making.",
+    imageUrl: "/assets/main/adaptive-trial.png",
+  },
+  "8": {
+    title: "Synthetic Control\nArm",
+    description:
+      "Generates a synthetic control group based on historical data to compare with the experimental arm, reducing the need for placebo patients.",
+    imageUrl: "/assets/main/target-subgroup-identification.png",
+  },
+  "9": {
+    title: "Historical Data\nAnalysis",
+    description:
+      "Analyzes historical clinical trial data to inform current study design and predict potential outcomes.",
+    imageUrl: "/assets/main/conditional-drug.png",
+  },
+
+};
+
+const packageContentMap: Record<string, RightPanelContent> = {
+  "1": {
+    title: "Twin Predict",
+    description:
+      "Simulates individual patient outcomes under various treatment conditions. Offers tailored response probabilities and treatment recommendations for clinical decision-making.",
+    imageUrl: "", // Not used for package video
+    videoUrl: "https://pub-797907feee5143c4a0f4f34c25916ee8.r2.dev/oprimed_movie/1-Twin%20Predict.webm",
+  },
+  "2": {
+    title: "Trial Optimizer",
+    description:
+      "Generates optimal clinical trial design strategies through repeated simulations across diverse trial design conditions.",
+    imageUrl: "",
+    videoUrl: "https://pub-797907feee5143c4a0f4f34c25916ee8.r2.dev/oprimed_movie/2-Trial%20Optimizer.webm",
+  },
+  "3": {
+    title: "Virtual Control",
+    description:
+      "Supports early trial design by identifying target subgroups and simulating different scenarios. Helps sponsors reduce sample size, optimize power, and refine study strategies.",
+    imageUrl: "",
+    videoUrl: "https://pub-797907feee5143c4a0f4f34c25916ee8.r2.dev/oprimed_movie/3-Virtual%20Control.webm",
   },
 };
 
@@ -202,8 +275,9 @@ export default function HomePage() {
             display: "flex",
             flexDirection: "column",
             padding: "28px",
-            borderRadius: "36px",
-            overflow: "hidden",
+        gap: "16px",
+        borderRadius: "44px",
+        overflow: "hidden",
           }}
         >
           <div style={{ display: "flex", flexDirection: "column", gap: "21px", flex: 1, overflowY: "auto", minHeight: 0 }}>
@@ -221,6 +295,15 @@ export default function HomePage() {
                   <SimulationTable serviceId={selectedServiceId} />
                 </div>
               </>
+            ) : selectedPackageId && packageContentMap[selectedPackageId] ? (
+              /* Package 선택 시 (Service 미선택) -> 비디오 패널 표시 (Full height) */
+              <div style={{ flex: 1, height: "100%", minHeight: 0 }}>
+                <PackageVideoPanel
+                  title={packageContentMap[selectedPackageId].title}
+                  description={packageContentMap[selectedPackageId].description}
+                  videoUrl={packageContentMap[selectedPackageId].videoUrl!}
+                />
+              </div>
             ) : (
               <div style={{ display: "flex", alignItems: "center", justifyContent: "center", width: "100%", height: "100%" }}>
                 <p style={{ fontFamily: "Inter", fontSize: "19.5px", fontWeight: 600, color: "#828993", letterSpacing: "-0.585px" }}>

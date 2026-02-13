@@ -51,7 +51,7 @@ export default function SimulationTable({ serviceId }: SimulationTableProps) {
           width: "100%",
           height: "41px",
           backgroundColor: "#000000",
-          borderRadius: "24px",
+          borderRadius: "32px",
           paddingLeft: "24px",
           paddingRight: "24px",
           paddingTop: "12px",
@@ -93,7 +93,7 @@ export default function SimulationTable({ serviceId }: SimulationTableProps) {
         className="flex items-center justify-center w-full"
         style={{
           backgroundColor: "#FFFFFF",
-          borderRadius: "24px",
+          borderRadius: "32px",
           minHeight: "394px",
           flex: 1,
         }}
