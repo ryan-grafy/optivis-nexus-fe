@@ -25,18 +25,18 @@ export default function SimulationTable({ serviceId }: SimulationTableProps) {
 
   const columns = isATSorTSI
     ? [
-        { label: "Simulation name", width: "145.66px" },
-        { label: "Disease",         width: "164.9px" },
-        { label: "Outcome",         width: "140.16px" },
-        { label: "Description",     width: "283.08px" },
-        { label: "Last updated",    width: "160.78px" },
+        { label: "Simulation name", flex: 145 },
+        { label: "Disease",         flex: 165 },
+        { label: "Outcome",         flex: 140 },
+        { label: "Description",     flex: 283 },
+        { label: "Last updated",    flex: 161 },
       ]
     : [
-        { label: "Patient ID",   width: "145.66px" },
-        { label: "Disease",      width: "164.9px" },
-        { label: "Outcome",      width: "140.16px" },
-        { label: "Description",  width: "283.08px" },
-        { label: "Last updated", width: "160.78px" },
+        { label: "Patient ID",   flex: 145 },
+        { label: "Disease",      flex: 165 },
+        { label: "Outcome",      flex: 140 },
+        { label: "Description",  flex: 283 },
+        { label: "Last updated", flex: 161 },
       ];
 
   return (
@@ -57,26 +57,29 @@ export default function SimulationTable({ serviceId }: SimulationTableProps) {
           paddingTop: "12px",
           paddingBottom: "12px",
           flexShrink: 0,
+          overflow: "hidden",
         }}
       >
-        {/* 컬럼들: Frame 1618872462 - gap 32.98px */}
+        {/* 컬럼들: Frame 1618872462 - gap 16px (reduced from 32.98px) */}
         <div
           className="flex items-center"
-          style={{ gap: "32.98px", width: "100%" }}
+          style={{ gap: "16px", width: "100%" }}
         >
           {columns.map((col) => (
             <span
               key={col.label}
               style={{
                 fontFamily: "Inter",
-                fontSize: "15px",
+                fontSize: "13px", // Reduced from 15px (-2pt approx)
                 fontWeight: 600,
                 lineHeight: "17px",
                 letterSpacing: "-0.3px",
                 color: "#FFFFFF",
-                width: col.width,
-                flexShrink: 0,
+                flex: `${col.flex} 1 0px`, // Use flex ratios for responsiveness
+                minWidth: 0,
                 whiteSpace: "nowrap",
+                overflow: "hidden",
+                textOverflow: "ellipsis",
               }}
             >
               {col.label}

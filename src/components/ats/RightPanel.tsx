@@ -327,7 +327,7 @@ export function RightPanel({
                 >
                   <div className="flex flex-col w-full h-full p-4">
                     {/* Card Header */}
-                    <div className="flex items-start justify-between mb-4">
+                    <div className="flex items-start justify-between mb-4 flex-shrink-0">
                       <div className="flex flex-col gap-1">
                         <h3 className="text-body1m text-neutral-98">
                           Smaller Sample
@@ -395,7 +395,7 @@ export function RightPanel({
                     {/* Chart Area */}
                     <div
                       className="mt-auto bg-neutral-95 rounded-[12px] border border-white"
-                      style={{ height: "auto", minHeight: "280px" }}
+                      style={{ height: "66%" }}
                     >
                       {chartDataToUse &&
                       chartDataToUse.smallerSample.optivis.length > 0 ? (
@@ -1288,7 +1288,7 @@ export function RightPanel({
                       <div className="grid grid-cols-2 gap-2 h-full">
                         {reductionCharts.map(
                           (chart, index) => (
-                            <div key={index} className="flex flex-col gap-2 ">
+                            <div key={index} className="flex flex-col gap-2 h-full">
                               <div className="flex items-start justify-between">
                                 <div className="flex flex-col gap-2">
                                   <span className="text-body5 text-black">
@@ -1326,7 +1326,7 @@ export function RightPanel({
                                   <FullscreenIcon />
                                 </button>
                               </div>
-                              <div style={{ height: "80px", width: "100%" }}>
+                              <div className="mt-auto" style={{ height: "120px", width: "100%" }}>
                                 <ComparisonBarChart
                                   optivisValue={chart.optivis}
                                   traditionalValue={chart.traditional}

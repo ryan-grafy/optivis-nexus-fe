@@ -56,6 +56,7 @@ export default function FeatureSection({
         padding: "28px",
         gap: "16px",
         borderRadius: "36px",
+        overflow: "hidden",
       }}
     >
       {/* Header: "01 Package" / "02 Service" */}
@@ -102,7 +103,7 @@ export default function FeatureSection({
       {/* Feature Cards: gap=16px */}
       <div
         className="flex flex-col"
-        style={{ gap: "16px", flex: 1 }}
+        style={{ gap: "16px", flex: 1, overflowY: "auto", minHeight: 0 }}
       >
         {features.map((feature) => (
           <FeatureCard

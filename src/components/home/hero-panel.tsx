@@ -48,12 +48,16 @@ export default function HeroPanel({
   return (
     <div
       className="flex w-full"
-      style={{ gap: "clamp(20px, 4%, 288px)", alignItems: "flex-start" }}
+      style={{ 
+        gap: "clamp(20px, 4%, 288px)", 
+        alignItems: "flex-start",
+        flexWrap: "wrap"
+      }}
     >
       {/* Left - 텍스트 영역 (Figma 492px → 42% 비율) */}
       <div
         className="flex flex-col"
-        style={{ gap: "clamp(20px, 6%, 72px)", flex: "1 1 0", minWidth: 0 }}
+        style={{ gap: "clamp(20px, 6%, 72px)", flex: "1 1 350px", minWidth: 0 }}
       >
         {/* Text group: VERTICAL gap=21.99px */}
         <div className="flex flex-col" style={{ gap: "21.99px" }}>
@@ -61,10 +65,10 @@ export default function HeroPanel({
           <h2
             style={{
               fontFamily: "Poppins",
-              fontSize: "50px",
+              fontSize: "clamp(28px, 3.5vw, 50px)",
               fontWeight: 600,
-              lineHeight: "55px",
-              letterSpacing: "-3px",
+              lineHeight: "1.1",
+              letterSpacing: "-0.06em",
               color: "#111111",
               margin: 0,
             }}
@@ -75,10 +79,10 @@ export default function HeroPanel({
           <p
             style={{
               fontFamily: "Inter",
-              fontSize: "20px",
+              fontSize: "clamp(15px, 1.4vw, 20px)",
               fontWeight: 400,
-              lineHeight: "28px",
-              letterSpacing: "-0.4px",
+              lineHeight: "1.4",
+              letterSpacing: "-0.02em",
               color: "#484646",
               margin: 0,
             }}
@@ -144,7 +148,7 @@ export default function HeroPanel({
       <div
         className="overflow-hidden bg-black"
         style={{
-          flex: "0 0 58%",
+          flex: "1 1 400px",
           maxWidth: "675px",
           aspectRatio: "675 / 400",
           borderRadius: "24px",

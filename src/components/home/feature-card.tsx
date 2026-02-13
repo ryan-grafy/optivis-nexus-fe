@@ -46,31 +46,29 @@ export default function FeatureCard({
   let cardBorder: string;
   let cardShadow: string;
 
-  if (isPackage) {
+    if (isPackage) {
     if (isSelected) {
       // Figma: Fill #262255, Glass Effect black r=24
       cardBg = "linear-gradient(180deg, rgba(56,51,110,1) 0%, rgba(38,34,85,1) 100%)";
       cardBorder = "1px solid rgba(255,255,255,0.15)";
-      cardShadow = "0 4px 24px rgba(38,34,85,0.4), inset 0 1px 0 rgba(255,255,255,0.1)";
+      cardShadow = "inset 0 1px 0 rgba(255,255,255,0.1)";
     } else {
       // Figma: Fill white, Glass Effect black r=24
       cardBg = "linear-gradient(180deg, rgba(255,255,255,0.95) 0%, rgba(248,248,248,0.90) 100%)";
       cardBorder = "1px solid rgba(255,255,255,0.8)";
-      cardShadow = isHovered 
-        ? "0 10px 20px rgba(0,0,0,0.08), inset 0 1px 0 rgba(255,255,255,1)" 
-        : "0 2px 12px rgba(0,0,0,0.06), inset 0 1px 0 rgba(255,255,255,0.9)";
+      cardShadow = "inset 0 1px 0 rgba(255,255,255,0.9)";
     }
   } else {
     if (isSelected || isHovered) {
       // Service card selected/hovered: lavender glass background
       cardBg = "linear-gradient(180deg, rgba(232,230,255,0.8) 0%, rgba(220,218,255,0.75) 100%)";
       cardBorder = "1px solid rgba(100,88,220,0.4)";
-      cardShadow = "0 2px 12px rgba(100,88,220,0.12), inset 0 1px 0 rgba(255,255,255,0.9)";
+      cardShadow = "inset 0 1px 0 rgba(255,255,255,0.9)";
     } else {
       // Default: white background
       cardBg = "linear-gradient(180deg, rgba(255,255,255,0.95) 0%, rgba(248,248,248,0.90) 100%)";
       cardBorder = "1px solid rgba(255,255,255,0.8)";
-      cardShadow = "0 2px 12px rgba(0,0,0,0.06), inset 0 1px 0 rgba(255,255,255,0.9)";
+      cardShadow = "inset 0 1px 0 rgba(255,255,255,0.9)";
     }
   }
 
@@ -130,7 +128,7 @@ export default function FeatureCard({
         width: "100%",
         /* 높이는 내용에 따라 flex로 채움 (Figma 352px 기준이나 반응형 허용) */
         flex: 1,
-        minHeight: "260px",
+        minHeight: "200px",
         padding: `${cardPad}px`,
         borderRadius: "24px",
         background: cardBg,

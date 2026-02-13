@@ -152,11 +152,11 @@ export default function HomePage() {
       >
         {/* ── 왼쪽: Package (Figma 470/2391 = 19.66%) ── */}
         <div style={{
-          flex: "0 0 470px",
-          width: "470px",
+          flex: "470 1 0",
           display: "flex",
           flexDirection: "column",
           minHeight: 0,
+          minWidth: "250px",
         }}>
           <FeatureSection
             title="01 Package"
@@ -174,11 +174,11 @@ export default function HomePage() {
 
         {/* ── 가운데: Service (Figma 469/2391 = 19.62%) ── */}
         <div style={{
-          flex: "0 0 469px",
-          width: "469px",
+          flex: "469 1 0",
           display: "flex",
           flexDirection: "column",
           minHeight: 0,
+          minWidth: "250px",
         }}>
           <FeatureSection
             title="02 Service"
@@ -196,37 +196,39 @@ export default function HomePage() {
         <div
           className="figma-nine-slice figma-home-panel-right"
           style={{
-            flex: "1 1 0",
-            minWidth: 0,
+            flex: "1452 1 0",
+            minWidth: "500px",
             minHeight: 0,
             display: "flex",
             flexDirection: "column",
             padding: "28px",
-            gap: "21px",
             borderRadius: "36px",
+            overflow: "hidden",
           }}
         >
-          {rightPanelContent ? (
-            <>
-              <HeroPanel
-                title={rightPanelContent.title}
-                description={rightPanelContent.description}
-                imageUrl={rightPanelContent.imageUrl}
-                videoUrl={rightPanelContent.videoUrl}
-                serviceId={selectedServiceId}
-              />
-              <div style={{ display: "flex", flexDirection: "column", gap: "16px", flex: 1, minHeight: 0 }}>
-                <SimulationSearch />
-                <SimulationTable serviceId={selectedServiceId} />
+          <div style={{ display: "flex", flexDirection: "column", gap: "21px", flex: 1, overflowY: "auto", minHeight: 0 }}>
+            {rightPanelContent ? (
+              <>
+                <HeroPanel
+                  title={rightPanelContent.title}
+                  description={rightPanelContent.description}
+                  imageUrl={rightPanelContent.imageUrl}
+                  videoUrl={rightPanelContent.videoUrl}
+                  serviceId={selectedServiceId}
+                />
+                <div style={{ display: "flex", flexDirection: "column", gap: "16px", flex: 1, minHeight: 0 }}>
+                  <SimulationSearch />
+                  <SimulationTable serviceId={selectedServiceId} />
+                </div>
+              </>
+            ) : (
+              <div style={{ display: "flex", alignItems: "center", justifyContent: "center", width: "100%", height: "100%" }}>
+                <p style={{ fontFamily: "Inter", fontSize: "19.5px", fontWeight: 600, color: "#828993", letterSpacing: "-0.585px" }}>
+                  {selectedPackageId ? "Service를 선택해주세요." : "Package를 선택해주세요."}
+                </p>
               </div>
-            </>
-          ) : (
-            <div style={{ display: "flex", alignItems: "center", justifyContent: "center", width: "100%", height: "100%" }}>
-              <p style={{ fontFamily: "Inter", fontSize: "19.5px", fontWeight: 600, color: "#828993", letterSpacing: "-0.585px" }}>
-                {selectedPackageId ? "Service를 선택해주세요." : "Package를 선택해주세요."}
-              </p>
-            </div>
-          )}
+            )}
+          </div>
         </div>
       </div>
     </AppLayout>
